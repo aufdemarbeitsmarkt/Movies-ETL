@@ -1,0 +1,21 @@
+#### constituents of regex for finding the first form of amounts in box office information: 
+
+     • \$ - escaped dollar sign
+         • \s* - in our second iteration to fix pattern matches, we wanted to look for cases where there might be a space after the dollar sign
+     • \d+ - indicate that we want one or more digits, i.e. an arbitrary (but non-zero) number of digits
+     • \.? - an optional decimal point
+     • \d* - an arbitrary, but *possibly* zero number of digits
+     • \s* - a space, maybe more than one
+     • [mb]illion - the word 'million' or 'billion'
+         • [mb]illi?on - in our second iteration, we changed this to accommodate for cases where 'million' is misspelled as 'millon'
+
+
+
+#### constituents of regex for finding the second form of amounts in box office information: 
+
+     • \$ - escaped dollar sign
+         • \s* - in our second iteration to fix pattern matches, we wanted to look for cases where there might be a space after the dollar sign
+     • \d{1,3} - indicate that we want one to three digits
+     • ?:(,\d{3})+ - match a comma followed by exactly three digits; match a repetition of this group by enclosing it in parenthesis and following that up with a plus sign; ensure it is a non-capturing group by adding ?:
+         • [,\.] - in our second iteration to fix pattern matches, we wanted to look for cases where a comma or period was used as a thousands separator
+     • (?!\s[mb]illion) - in our second iteration to fix pattern matches, we added a negative look ahead group that rejects the match if it finds 'million' or 'billion'
